@@ -7,7 +7,11 @@ export const Blog = () => {
 const [articles, setArticle] = useState(blog)
 
 const chooseCategory = ( category:string ) => {
-  setArticle(blog.filter(article => article.category === category))
+  if (category === 'all') {
+    setArticle(blog)
+  } else {
+    setArticle(blog.filter(article => article.category.includes(category)))
+  }
 }
 
 return (

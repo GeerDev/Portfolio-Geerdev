@@ -1,0 +1,12 @@
+---
+export async function getStaticPaths() {
+  // Aquí defines qué valores puede tomar [name]
+  return [
+    { params: { name: 'mi-primer-articulo' } },
+    { params: { name: 'guia-de-astro' } },
+  ];
+}
+
+const { name } = Astro.params;
+---
+<h1>Estás leyendo: {name}</h1>
