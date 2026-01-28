@@ -1,0 +1,17 @@
+---
+import { skills } from "@cv"
+const { color } = Astro.props
+---
+
+<ul class="inline-flex gap-2 flex-wrap">
+  {
+    skills.map(({ name }) => {
+
+      return (
+        <li class=`flex items-center ${ color } rounded-lg text-sm gap-1.5 px-1.5 py-0.5`>
+          <span>{ name }</span>
+        </li>
+      )
+    })
+  }
+</ul>

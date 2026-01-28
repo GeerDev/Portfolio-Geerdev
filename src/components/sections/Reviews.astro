@@ -1,0 +1,32 @@
+---
+import Section from "../Section.astro";
+
+import { reviews } from "@cv"
+---
+
+<Section title="Recomendaciones">
+    <ul>
+    {
+      reviews.map(({ name, position, date, team, review, image, link }) => {
+        return (
+          <li class="p-2">
+            <article class="flex flex-col gap-4">
+              <header class="flex items-center gap-5">
+                <img src={ image } alt={ name } class="rounded-full size-16 object-cover" loading="lazy" />
+                <div>
+                  <h3 class="font-bold">{ name }</h3>
+                  <h2>{ position }</h2>
+                  <p class="text-[#666]">{ date }, { name.split(' ')[0]} { team }</p>
+                </div>
+              </header>
+
+              <footer>
+                <div set:html={ review.split('\n\n').map(p => `<p class="p-2">${p}</p>`).join('') } />
+              </footer>
+            </article>
+          </li>
+        )
+      })
+    }
+  </ul>
+</Section>

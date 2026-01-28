@@ -1,0 +1,114 @@
+---
+import 'hotkeypad/index.css'
+
+import { basics } from "@cv"
+
+const { profiles } = basics
+
+const profilesInfo = profiles.map(({ network, url }) => {
+  const firstLetter = network[0].toUpperCase()
+
+  return {
+    id: network,
+    section: "Social",
+    title: `Visitar ${network}`,
+    url,
+    hotkey: `ctrl+${firstLetter}`
+  }
+})
+---
+
+<div id="text-hotkeypad" class="no-print w-full flex items-center justify-center">
+  <p>Pulsa <kbd>Cmd</kbd> + <kbd>K</kbd> o <kbd>Ctrl</kbd> + <kbd>K</kbd> para abrir la paleta de comandos.</p>
+</div>
+
+<div
+  id="hotkeypad"
+  data-placeholder="Buscar comando"
+  data-info={JSON.stringify(profilesInfo)}
+>
+</div>
+
+<script>
+  interface Info {
+    id: string
+    section: string
+    title: string
+    url: string
+    icon: string
+    hotkey: string
+    handler?: () => void
+  }
+
+  import HotKeyPad from "hotkeypad"
+
+  const hotkeypad = new HotKeyPad()
+  const info = hotkeypad.instance.getAttribute("data-info") ?? "[]"
+  const parsedInfo = JSON.parse(info) as Info[]
+
+  const data = parsedInfo.map(
+    ({ url, hotkey, icon, id, section, title }) => {
+      return {
+        id,
+        title,
+        icon,
+        hotkey,
+        section,
+        handler: () => {
+          window.open(url, "_blank")
+        }
+      }
+    }
+  )
+  hotkeypad.setCommands([
+    {
+      id: "print",
+      title: "Imprimir",
+      hotkey: "ctrl+P",
+      section: "Acciones",
+      handler: () => {
+        window.print()
+      }
+    },
+    ...data
+  ])
+</script>
+
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 600px) {
+    #normal-footer {
+      display: none;
+    }
+  }
+
+  #text-hotkeypad {
+    background: #fdfdfd;
+    border-top: 1px solid #eee;
+    position: fixed;
+    bottom: 0px;
+    padding-block: 8px;
+
+    view-timeline-name: --revealing;
+    view-timeline-axis: block;
+
+    animation: linear 0.3s fadeIn;
+    animation-timeline: --revealing;
+    animation-range: entry 100% cover 10%;
+  }
+
+  kbd {
+    background: #eee;
+    border-radius: 4px;
+    padding: 2px 4px;
+    font-size: 15px;
+  }
+</style>

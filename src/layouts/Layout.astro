@@ -1,0 +1,40 @@
+---
+import './src/styles/global.css'
+
+import { basics } from '@cv'
+interface Props {
+  title?: string
+}
+
+const { title = "Portfolio Germán Fernández Sierra" } = Astro.props
+const { image, summary, url } = basics
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href={image} />
+		<link rel="preload" as="image" href={image} />
+		<title>{ title }</title>
+
+		<meta name="description" content={summary} />
+
+		<meta property="og:url" content={url} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={summary} />
+    <meta property="og:image" content="" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content={url.split("//")[1] ?? ''} />
+    <meta property="twitter:url" content={url} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={summary} />
+    <meta name="twitter:image" content={image} />
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>

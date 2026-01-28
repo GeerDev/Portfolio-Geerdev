@@ -1,0 +1,49 @@
+---
+import Section from "../Section.astro";
+
+import { GitHub } from '@/icons'
+
+import { projects } from "@cv"
+import Skills from "../Skills.astro";
+---
+
+<Section title="Mis proyectos">
+  <ul class="-mx-3 grid grid-cols-2 gap-6">
+    {
+      projects.slice(0,4).map(
+        ({ url, description, highlights, name, isActive, image }) => {
+          return (
+            <li class="border border-[#eee] rounded-lg p-3 hover:scale-105 transition duration-300 cursor-pointer shadow-lg">
+              <article class="flex flex-col gap-3 h-full mx-1">
+                <header class="flex flex-col gap-2">
+                  <figure>
+                    <img src={image} alt={name} class="aspect-square w-full size-60 rounded-lg"/>
+                  </figure>
+                  <h3 class="flex justify-between items-center font-black">
+                    <div>
+                      <a href={url} target="_blank" title={`Ver el proyecto ${name}`}>
+                        {name}
+                      </a>
+                    </div>
+                  </h3>
+                  <p>{description}</p>
+                </header>
+                <main class="flex flex-col">
+                  {highlights.map((highlight) => {
+                    return <span>• {highlight}</span>
+                  })}
+                </main>
+                <footer class="mt-auto text-white">
+                  <Skills color="bg-[#44495A]"/>
+                </footer>
+              </article>
+            </li>
+          )
+        }
+      )
+    }
+  </ul>
+  <div class="flex justify-end mt-5 hover:underline cursor-pointer">
+    <a href="/projects">...ver todos los proyectos</a>
+  </div>
+</Section>

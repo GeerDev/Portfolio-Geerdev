@@ -1,0 +1,58 @@
+---
+import { blog } from "@cv"
+import Section from "../Section.astro"
+---
+
+<Section title="Blog">
+  <h2>Esta es la sección de blog donde se muestran todos los artículos que voy escribiendo.</h2>
+  <ul class="-mx-3 grid grid-cols-1 gap-5 py-5">
+    {
+      blog.filter(article => article.important).map(
+        ({ url, description, highlights, name, isActive, image, category }, index) => {
+          return (
+            <li 
+            class={`p-5 flex items-center justify-centerp-3 relative overflow-hidden group rounded-lg h-full gap-10 cursor-pointer animate-fade-in hover:shadow-lg transition-all duration-600 ${index % 2 !== 0 ? 'flex-row-reverse' : ''}`}
+            >
+              <div class="absolute left-0 bottom-0 h-1/2 w-px bg-[#ddd] group-hover:h-full transition-all duration-600"></div>
+              <div class="absolute left-0 bottom-0 h-px w-1/6 bg-[#ddd] group-hover:w-full transition-all duration-600"></div>
+              <div class="absolute right-0 top-0 h-1/2 w-px bg-[#ddd] group-hover:h-full transition-all duration-600"></div>
+              <div class="absolute right-0 top-0 h-px w-1/6 bg-[#ddd] group-hover:w-full transition-all duration-600"></div>
+              <figure class="relative flex shrink-0 overflow-hidden rounded-xl size-35">
+                <img src={image} alt={name} class="aspect-square w-full h-full"/>
+              </figure>
+              <article>
+                <div class="flex flex-col gap-2">
+                  <header>
+                    <h2 class="bg-[#ddd] inline-flex rounded-lg text-sm px-5 py-1 mb-2 gap-3">{ category.map(item => {
+                      return <span class="font-semibold">{item} |</span>
+                    }) }</h2>
+                    <h3 class="flex justify-between items-center font-black">
+                      <div>
+                        <a href={url} target="_blank" title={`Ver el proyecto ${name}`}>
+                          {name}
+                        </a>
+                      </div>
+                    </h3>
+                    <p>{description}</p>
+                  </header>
+                  <footer class="flex flex-wrap gap-2">
+                    {highlights.map((highlight) => {
+                      return <span class="font-semibold text-[#7c7c7c]">#{highlight}&nbsp</span>
+                    })}
+                  </footer>
+                </div>
+              </article>
+            </li>
+          )
+        }
+      )
+    }
+  </ul>
+  <div class="flex justify-end mt-5 hover:underline cursor-pointer">
+    <a href="/articles">...ver todos los artículos del blog</a>
+  </div>
+</Section>
+
+
+
+

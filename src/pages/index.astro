@@ -1,0 +1,33 @@
+---
+import About from '@/components/sections/About.astro';
+import Layout from '../layouts/Layout.astro';
+
+import Hero from '@/components/sections/Hero.astro';
+
+import { basics } from "@cv"
+import Experience from '@/components/sections/Experience.astro';
+import Projects from '@/components/sections/Projects.astro';
+import Education from '@/components/sections/Education.astro';
+import Blog from '@/components/sections/Blog.astro'
+import Thanks from '@/components/sections/Thanks.astro';
+import KeyboardManager from '@/components/KeyboardManager.astro';
+import Reviews from '@/components/sections/Reviews.astro';
+import Awards from '@/components/sections/Awards.astro';
+
+const { name, label } = basics
+---
+
+<Layout title={`Portafolio de ${name} - ${label}`}>
+	<main class="p-10">
+	  <Hero />
+		<About />
+		<Experience />
+		<Projects />
+		<Education />
+		<Blog />
+		<Reviews />
+		<Awards />
+		<Thanks />
+	</main>
+	<KeyboardManager />
+</Layout>

@@ -1,0 +1,55 @@
+---
+import Section from "../Section.astro";
+
+import { work } from "@cv"
+import Skills from "../Skills.astro";
+---
+
+<Section title="Experiencia laboral">
+  <ul class="flex flex-col gap-8">
+    {
+      work.map(
+        ({ name, startDate, endDate, position, summary, url }) => {
+          const startYear = new Date(startDate).getFullYear()
+          const endYear = endDate != null ? new Date(endDate).getFullYear() : "Actual"
+
+          return (
+            <li>
+              <article>
+                <header class="flex items-start justify-between mb-2">
+                  <div class="flex flex-col gap-1">
+                    <div class="flex gap-5">
+                      <a href={ url } title={`Ver ${ name }`} target="_blank" class="font-black">
+                        <h3 class="text-lg">{name}</h3>
+                      </a>
+                      <Skills color="bg-[#ddd]"/>
+                    </div>
+                    <h4 class="font-black text-sm">{ position }</h4>
+                  </div>
+
+                  <div class="text-[#666]">
+                    <time 
+                      datetime={startDate}
+                      data-title={startDate}>
+                        { startYear }
+                    </time>
+                    {" - "}
+                    <time 
+                      datetime={endDate}
+                      data-title={endDate}>
+                        { endYear }
+                    </time>
+                  </div>
+                </header>
+
+                <footer>
+                  <p>{ summary }</p>
+                </footer>
+              </article>
+            </li>
+          )
+        }
+      )
+    }
+  </ul>
+</Section>

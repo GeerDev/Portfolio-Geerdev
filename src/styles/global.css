@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@plugin "@midudev/tailwind-animations";
+
+html{
+  font-family: monospace, sans-serif;
+  letter-spacing: -0.025rem;
+}
