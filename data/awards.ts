@@ -1,0 +1,10 @@
+export const awards = [
+  {
+    "title": "Award",
+    "date": "2014-11-01",
+    "awarder": "Company",
+    "summary": "There is no spoon."
+  }
+] as const;
+
+export default awards;

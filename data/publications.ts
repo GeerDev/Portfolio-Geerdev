@@ -1,0 +1,11 @@
+export const publications = [
+  {
+    "name": "Publication",
+    "publisher": "Company",
+    "releaseDate": "2014-10-01",
+    "url": "https://publication.com",
+    "summary": "Description…"
+  }
+] as const;
+
+export default publications;

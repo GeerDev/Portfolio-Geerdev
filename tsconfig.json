@@ -11,7 +11,7 @@
     "baseUrl": ".",
     "paths": {
       "@cv": [
-        "./cv.json"
+        "./data/cv.ts"
       ],
       "@/*": [
         "src/*"

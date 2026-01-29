@@ -1,5 +1,5 @@
 ---
-import { Blog } from "@/components/all/Blog.tsx";
+import { Blog as BlogPage } from "@/components/all/Blog.tsx";
 import Layout from "@/layouts/Layout.astro";
 
 import { basics } from "@cv"
@@ -13,6 +13,6 @@ const { name, label } = basics
     <h1 class="text-3xl font-bold text-center flex-1">Todos mis artículos</h1>
   </section>
   <main>
-    <Blog client:visible />
+    <BlogPage client:visible />
   </main>
 </Layout>
