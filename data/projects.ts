@@ -1,14 +1,14 @@
 export const projects = [
   {
-    "name": "mars.codes",
+    "name": "Proyecto",
     "image": "/Womada.webp",
     "isActive": true,
-    "description": "Historia interactiva con retos de programación para viajar a Marte",
+    "description": "Esto sería una breve descripción del proyecto",
     "highlights": [
-      "Elige tu propia aventura",
-      "En desarrollo"
+      "Highlight importante 1",
+      "Ejemplo de highlight 2"
     ],
-    "url": "https://mars.codes"
+    "url": "url"
   },
   {
     "name": "AdventJS",

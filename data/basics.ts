@@ -1,11 +1,11 @@
 export const basics = {
   "name": "Germán Fernández Sierra",
-  "label": "Full Stack Developer, de experiencia como Desarrollador Web. Actualmente soy Creador de Contenido y Divulgador sob",
+  "label": "Full Stack Developer, de experiencia como Desarrollador Web.",
   "image": "/me.webp",
   "email": "gerfersie@gmail.com",
   "phone": "+34 688888888",
-  "url": "https://midu.dev",
-  "summary": "+15 años de experiencia como Desarrollador Web. Actualmente soy Creador de Contenido y Divulgador sobre Programación. Vivo en Barcelona, España. He trabajado en diferentes entornos: desde acelerar el desarrollo de start-ups hasta liderando equipos de empresas multinacionales.",
+  "url": "https://geer.dev",
+  "summary": "Descripcion breve sobre ti, a modo de introducción.",
   "location": {
     "address": "",
     "postalCode": "46300",
@@ -16,11 +16,11 @@ export const basics = {
   "profiles": [
     {
       "network": "LinkedIn",
-      "url": "https://linkedin.com/in/midudev"
+      "url": "https://linkedin.com/in/geerdev"
     },
     {
       "network": "GitHub",
-      "url": "https://github.com/midudev"
+      "url": "https://github.com/geerdev"
     }
   ]
 } as const;
