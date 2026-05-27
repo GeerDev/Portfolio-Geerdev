@@ -7,10 +7,7 @@ export const basics = {
   "url": "https://geer.dev",
   "summary": "Descripcion breve sobre ti, a modo de introducción.",
   "location": {
-    "address": "",
-    "postalCode": "46300",
     "city": "Utiel",
-    "countryCode": "ES",
     "region": "España"
   },
   "profiles": [
