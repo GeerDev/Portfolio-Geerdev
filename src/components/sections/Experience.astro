@@ -2,49 +2,44 @@
 import Section from "../Section.astro";
 
 import { work } from "@cv"
-import Skills from "../Skills.astro";
 ---
 
 <Section title="Experiencia laboral">
-  <ul class="flex flex-col gap-8">
+  <ul class="flex flex-col gap-10">
     {
       work.map(
-        ({ name, startDate, endDate, position, summary, url }) => {
+        ({ name, startDate, endDate, position, summary, url, highlights }) => {
           const startYear = new Date(startDate).getFullYear()
           const endYear = endDate != null ? new Date(endDate).getFullYear() : "Actual"
 
           return (
             <li>
-              <article>
-                <header class="flex items-start justify-between mb-2">
-                  <div class="flex flex-col gap-1">
-                    <div class="flex gap-5">
-                      <a href={ url } title={`Ver ${ name }`} target="_blank" class="font-black">
-                        <h3 class="text-lg">{name}</h3>
+              <article class="flex flex-col gap-3">
+                <header class="flex flex-col gap-0.5">
+                  <div class="flex items-baseline justify-between gap-4">
+                    {url ? (
+                      <a href={url} title={`Ver ${name}`} target="_blank" rel="noopener noreferrer" class="font-black text-lg hover:underline">
+                        <h3>{name}</h3>
                       </a>
-                      <Skills color="bg-[#ddd]"/>
-                    </div>
-                    <h4 class="font-black text-sm">{ position }</h4>
+                    ) : (
+                      <h3 class="font-black text-lg">{name}</h3>
+                    )}
+                    <time class="text-sm text-[#666] shrink-0">{startYear} - {endYear}</time>
                   </div>
-
-                  <div class="text-[#666]">
-                    <time 
-                      datetime={startDate}
-                      data-title={startDate}>
-                        { startYear }
-                    </time>
-                    {" - "}
-                    <time 
-                      datetime={endDate}
-                      data-title={endDate}>
-                        { endYear }
-                    </time>
-                  </div>
+                  <h4 class="font-semibold text-sm text-[#444]">{position}</h4>
+                  {summary && <p class="text-sm text-[#888]">{summary}</p>}
                 </header>
 
-                <footer>
-                  <p>{ summary }</p>
-                </footer>
+                {highlights && highlights.length > 0 && (
+                  <ul class="flex flex-col gap-2">
+                    {highlights.map((highlight) => (
+                      <li class="flex gap-2.5 items-start">
+                        <span class="text-[#44495A] mt-0.5 shrink-0" aria-hidden="true">▹</span>
+                        <span class="font-medium text-[#222]">{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </article>
             </li>
           )

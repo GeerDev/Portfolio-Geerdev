@@ -37,7 +37,7 @@ const SOCIAL_ICONS: SocialIcon = {
         {
           email && (
             <a
-              href={`mailto:${email}`}
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent("¿Hablamos? Creemos que encajas en nuestro equipo")}`}
               title={`Enviar un correo electrónico a ${name} al correo ${email}`}
               target="_blank"
               rel="noopener noreferrer"

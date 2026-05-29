@@ -5,27 +5,31 @@ import { education } from "@cv"
 ---
 
 <Section title="Educación">
-  <ul>
+  <ul class="flex flex-col gap-6">
     {
-      education.map(({ institution, startDate, endDate, area }) => {
+      education.map(({ institution, startDate, endDate, area, image }) => {
         const startYear = new Date(startDate).getFullYear()
         const endYear = endDate != null ? new Date(endDate).getFullYear() : "Actual"
         const years = `${startYear} - ${endYear}`
 
         return (
           <li>
-            <article>
-              <header class="flex justify-between items-center">
-                <div>
-                  <h3>{institution}</h3>
-                </div>
+            <article class="flex items-center justify-between gap-4">
+              <div class="flex flex-col gap-1">
+                <header class="flex flex-col">
+                  <h3 class="font-semibold text-lg">{institution}</h3>
+                  <p class="text-[#666]">{area}</p>
+                </header>
+                <time class="text-sm text-[#888]">{years}</time>
+              </div>
 
-                <time>{years}</time>
-              </header>
-
-              <footer>
-                <p>{area}</p>
-              </footer>
+              <figure class="shrink-0 flex items-center justify-center size-14 rounded-lg border border-[#eee] bg-white p-1.5">
+                <img
+                  src={image}
+                  alt={institution}
+                  class="max-w-full max-h-full object-contain"
+                />
+              </figure>
             </article>
           </li>
         )

@@ -6,5 +6,7 @@ const { summary } = basics
 ---
 
 <Section title="Sobre mí">
-  <h2 class="text-base">{ summary }</h2>
+  <div class="flex flex-col gap-3 text-base text-pretty">
+    {summary.split('\n\n').map((paragraph) => <p>{paragraph}</p>)}
+  </div>
 </Section>
