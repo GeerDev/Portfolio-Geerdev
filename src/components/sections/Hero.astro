@@ -7,13 +7,13 @@ import type { SocialIcon } from "@/interfaces/SocialIcon"
 
 import { Mail, Phone, WorldMap, LinkedIn, GitHub } from "@/icons";
 
-const { name, label, image, location, profiles, phone, email } = basics
+const { name, label, image, location, profiles, email } = basics
 const { city, region } = location
 
 const linkedInfo = profiles.find(({ network }) => network === "LinkedIn")
 const linkedUrl = linkedInfo?.url
 
-const printInfo = [email, phone, linkedUrl].filter(Boolean).join(" • ")
+const printInfo = [email, linkedUrl].filter(Boolean).join(" • ")
 
 const SOCIAL_ICONS: SocialIcon = {
   GitHub,
@@ -26,7 +26,7 @@ const SOCIAL_ICONS: SocialIcon = {
     <div class="flex flex-col gap-2 pr-8">
       <h1 class="text-3xl font-black">{name}</h1>
       <h2 class="font-medium text-[#444] text-lg text-balance">{label}</h2>
-      <span class="flex items-center gap-1 text-sm -tracking-wide text-[#666]">
+      <span class="flex items-center gap-1 text-sm tracking-tight text-[#666]">
         <WorldMap />
         {city}, {region}
       </span>
@@ -44,19 +44,6 @@ const SOCIAL_ICONS: SocialIcon = {
               class="inline-flex items-center justify-center border border-solid border-[#eee] p-1 size-8 rounded-lg transition-all duration-300 hover:bg-[#eee] hover:border-[#ddd]"
             >
               <Mail />
-            </a>
-          )
-        }
-        {
-          phone && (
-            <a
-              href={`tel:${phone}`}
-              title={`Llamar por teléfono a ${name} al número ${phone}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center justify-center border border-solid border-[#eee] p-1 size-8 rounded-lg transition-all duration-300 hover:bg-[#eee] hover:border-[#ddd]"
-            >
-              <Phone />
             </a>
           )
         }

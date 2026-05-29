@@ -1,14 +1,13 @@
 export const basics = {
   "name": "Germán Fernández Sierra",
-  "label": "Full Stack Developer, de experiencia como Desarrollador Web.",
+  "label": "Full Stack Developer & DevOps · AWS Certified · Ingeniero Industrial | Del código a la infraestructura | Ex-banca",
   "image": "/me.webp",
   "email": "gerfersie@gmail.com",
-  "phone": "+34 688888888",
-  "url": "https://geer.dev",
+  "url": "https://geerdev.tech/",
   "summary": "Descripcion breve sobre ti, a modo de introducción.",
   "location": {
-    "city": "Utiel",
-    "region": "España"
+    "city": "Puerto de Sagunto",
+    "region": "Valencia"
   },
   "profiles": [
     {
