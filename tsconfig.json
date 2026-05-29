@@ -8,13 +8,12 @@
     "dist"
   ],
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@cv": [
         "./data/cv.ts"
       ],
       "@/*": [
-        "src/*"
+        "./src/*"
       ]
     },
     "jsx": "react-jsx",
