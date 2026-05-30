@@ -24,7 +24,7 @@ export const blog = [
       "Cómo funciona un índice",
       "Buenas prácticas SQL"
     ],
-    "image": "/Team.png",
+    "image": "/Index_database.png",
     "url": ""
   },
   {
@@ -38,7 +38,7 @@ export const blog = [
       "Monolito vs microservicios",
       "Despliegue independiente"
     ],
-    "image": "/Ssh.png",
+    "image": "/Microservices.png",
     "url": ""
   }
 ] as const;
