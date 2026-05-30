@@ -7,7 +7,7 @@ order: 4
 highlights:
   - "Highlight importante 1"
   - "Ejemplo de highlight 2"
-skills: ["Html", "Css", "Javascript"]
+skills: ["Html", "Css", "Javascript", "Linux", "Git", "OpenAI API"]
 url: "url"
 github: "url_github"
 ---

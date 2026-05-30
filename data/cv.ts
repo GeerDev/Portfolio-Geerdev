@@ -4,6 +4,7 @@ export { volunteer } from './volunteer';
 export { education } from './education';
 export { awards } from './awards';
 export { reviews } from './reviews';
+export { aptitudes } from './aptitudes';
 
 import * as all from './basics';
 import * as _work from './work';
@@ -11,6 +12,7 @@ import * as _volunteer from './volunteer';
 import * as _education from './education';
 import * as _awards from './awards';
 import * as _reviews from './reviews';
+import * as _aptitudes from './aptitudes';
 
 const combined = {
   basics: (all as any).basics,
@@ -18,7 +20,8 @@ const combined = {
   volunteer: (_volunteer as any).volunteer,
   education: (_education as any).education,
   awards: (_awards as any).awards,
-  reviews: (_reviews as any).reviews
+  reviews: (_reviews as any).reviews,
+  aptitudes: (_aptitudes as any).aptitudes
 };
 
 export default combined;

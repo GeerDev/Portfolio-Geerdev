@@ -7,7 +7,7 @@ order: 1
 highlights:
   - "Highlight importante 1"
   - "Ejemplo de highlight 2"
-skills: ["React", "TypeScript", "Tailwind"]
+skills: ["React", "TypeScript", "Tailwind", "Astro", "Next.js"]
 url: "url"
 ---
 

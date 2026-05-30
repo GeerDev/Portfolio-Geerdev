@@ -1,7 +1,7 @@
 ---
 import Section from "../Section.astro";
 
-import { basics } from "@cv"
+import { basics, aptitudes } from "@cv"
 const { summary } = basics
 ---
 
@@ -9,4 +9,14 @@ const { summary } = basics
   <div class="flex flex-col gap-3 text-base text-pretty">
     {summary.split('\n\n').map((paragraph) => <p>{paragraph}</p>)}
   </div>
+
+  <ul class="flex flex-wrap gap-2 mt-5">
+    {
+      aptitudes.map((skill) => (
+        <li class="text-sm font-semibold text-[#44495A] bg-[#44495A]/10 rounded-md px-2 py-1 transition-colors duration-300 hover:bg-[#44495A] hover:text-white">
+          <span class="opacity-60">#</span>{skill}
+        </li>
+      ))
+    }
+  </ul>
 </Section>

@@ -7,7 +7,7 @@ order: 3
 highlights:
   - "Highlight importante 1"
   - "Ejemplo de highlight 2"
-skills: ["Javascript", "Node"]
+skills: ["Javascript", "Node", "Docker", "AWS", "CI/CD"]
 url: "url"
 ---
 

@@ -6,6 +6,30 @@ html{
   letter-spacing: -0.025rem;
 }
 
+/* CV imprimible (Ctrl+P): el portfolio web se oculta y se muestra PrintResume,
+   ajustado a una hoja A4. */
+@media print {
+  /* margin: 0 deja al navegador sin espacio para dibujar su cabecera/pie
+     (fecha, URL, nº de página), así que en la práctica desaparecen.
+     El "margen" real se aplica como padding del propio CV (.print-resume). */
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  html, body {
+    background: #fff;
+  }
+  .print-resume {
+    padding: 12mm;
+    /* Conserva los acentos de color del CV al imprimir. */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
 /* Estilos del contenido Markdown de las páginas de detalle (proyectos/artículos) */
 .markdown-body {
   line-height: 1.7;

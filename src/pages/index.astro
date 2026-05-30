@@ -14,12 +14,13 @@ import KeyboardManager from '@/components/KeyboardManager.astro';
 import Reviews from '@/components/sections/Reviews.astro';
 import Awards from '@/components/sections/Awards.astro';
 import Volunteer from '@/components/sections/Volunteer.astro';
+import PrintResume from '@/components/PrintResume.astro';
 
 const { name, label } = basics
 ---
 
 <Layout title={`Portafolio de ${name} - ${label}`}>
-	<main class="p-10">
+	<main class="p-10 print:hidden">
 	  <Hero />
 		<About />
 		<Experience />
@@ -31,5 +32,8 @@ const { name, label } = basics
 		<Volunteer />
 		<Thanks />
 	</main>
+	<div class="hidden print:block print:h-full">
+		<PrintResume />
+	</div>
 	<KeyboardManager />
 </Layout>

@@ -1,0 +1,179 @@
+---
+// CV compacto de UNA PÁGINA, pensado solo para impresión (Ctrl+P).
+// En pantalla está oculto; al imprimir se muestra (ver index.astro y global.css).
+// Es data-driven: usa los datos del CV (@cv) + proyectos y blog de las colecciones.
+import { basics, work, education, awards, reviews, volunteer, aptitudes } from "@cv";
+import { getCollection } from "astro:content";
+
+const { name, label, email, url, location, profiles, summary } = basics;
+const { city, region } = location;
+
+const linkedin = profiles.find((p) => p.network === "LinkedIn")?.url;
+const github = profiles.find((p) => p.network === "GitHub")?.url;
+const portfolio = url.replace("https://", "").replace(/\/$/, "");
+
+// Perfil corto: primer párrafo del summary.
+const perfil = summary.split("\n\n")[0];
+
+const year = (d: string | null) =>
+  d != null ? new Date(d).getFullYear() : "Actual";
+
+// Proyectos y artículos destacados (fuente única: colecciones).
+const projectEntries = (await getCollection("projects"))
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const topProjects = projectEntries.slice(0, 3);
+
+const articleEntries = (await getCollection("blog"))
+  .filter((a) => a.data.important)
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const topArticles = articleEntries.slice(0, 4);
+
+// Tecnologías únicas a partir de los proyectos (no se inventan).
+const skills = [...new Set(projectEntries.flatMap((p) => p.data.skills))];
+
+const award = awards[0];
+const vol = volunteer[0];
+
+// Cita destacada (literal de una review real).
+const featured = reviews.find((r) => r.name.startsWith("Francisco")) ?? reviews[0];
+const quote = featured?.review.split("\n\n")[0];
+const quoteAuthor = featured ? `${featured.name.split(" ").slice(0, 2).join(" ")} · ${featured.position}` : "";
+
+const H = "text-[13px] font-black uppercase tracking-wide text-[#44495A] border-b border-[#ccc] pb-0.5 mb-2";
+---
+
+<section class="print-resume text-[#111] flex flex-col h-full">
+  <!-- Cabecera -->
+  <header class="text-center border-b-2 border-[#44495A] pb-2 mb-3">
+    <h1 class="text-3xl font-black">{name}</h1>
+    <p class="text-[12px] text-[#444] mt-0.5">{label}</p>
+    <p class="text-[11px] text-[#555] mt-1 flex flex-wrap justify-center gap-x-2.5 gap-y-0.5">
+      <span>{email}</span>
+      <span>·</span>
+      <span>{city}, {region}</span>
+      {linkedin && (<><span>·</span><span>{linkedin.replace("https://", "")}</span></>)}
+      {github && (<><span>·</span><span>{github.replace("https://", "")}</span></>)}
+    </p>
+    <p class="text-[11px] text-[#555] mt-0.5">Puedes ver mi portfolio en <span class="font-bold text-[#44495A]">{portfolio}</span></p>
+  </header>
+
+  <!-- Perfil -->
+  <section class="mb-4">
+    <p class="text-[11.5px] leading-snug text-[#333]">{perfil}</p>
+  </section>
+
+  <div class="grid grid-cols-3 gap-6 flex-1">
+    <!-- Columna principal -->
+    <div class="col-span-2 flex flex-col">
+      <h2 class={H}>Experiencia</h2>
+      <ul class="flex flex-col gap-3 mb-4">
+        {work.map((job) => (
+          <li>
+            <div class="flex items-baseline justify-between gap-2">
+              <h3 class="text-[13px] font-bold">{job.position}</h3>
+              <span class="text-[10px] text-[#666] shrink-0">{year(job.startDate)} – {year(job.endDate)}</span>
+            </div>
+            <p class="text-[11px] font-semibold text-[#44495A] mb-0.5">{job.name}</p>
+            <p class="text-[11px] text-[#444] mb-0.5">{job.summary}</p>
+            <ul class="flex flex-col gap-0.5">
+              {job.highlights.map((h) => (
+                <li class="text-[10.5px] text-[#555] flex gap-1.5">
+                  <span class="text-[#44495A]">▹</span>
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+
+      <h2 class={H}>Formación</h2>
+      <ul class="flex flex-col gap-2 mb-4">
+        {education.map((edu) => (
+          <li class="flex items-baseline justify-between gap-3">
+            <div>
+              <p class="text-[11.5px] font-semibold leading-tight">{edu.area}</p>
+              <p class="text-[10.5px] text-[#555]">{edu.institution}</p>
+            </div>
+            <span class="text-[10px] text-[#777] shrink-0">{year(edu.startDate)} – {year(edu.endDate)}</span>
+          </li>
+        ))}
+      </ul>
+
+      {topProjects.length > 0 && (
+        <div>
+          <h2 class={H}>Proyectos destacados</h2>
+          <ul class="flex flex-col gap-1.5">
+            {topProjects.map((p) => (
+              <li>
+                <div class="flex items-baseline gap-2">
+                  <span class="text-[11.5px] font-bold">{p.data.name}</span>
+                  {p.data.skills.length > 0 && (
+                    <span class="text-[10px] text-[#777]">· {p.data.skills.join(", ")}</span>
+                  )}
+                </div>
+                <p class="text-[10.5px] text-[#555]">{p.data.description}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+
+    <!-- Columna lateral -->
+    <div class="col-span-1 flex flex-col">
+      <h2 class={H}>Tecnologías</h2>
+      <ul class="flex flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-[#333] mb-3">
+        {skills.map((s, i) => (
+          <li class="whitespace-nowrap">{s}{i < skills.length - 1 && <span class="text-[#aaa] ml-2">·</span>}</li>
+        ))}
+      </ul>
+
+      <h2 class={H}>Aptitudes</h2>
+      <ul class="flex flex-col gap-0.5 mb-3">
+        {aptitudes.map((a) => (
+          <li class="text-[11px] flex gap-1.5"><span class="text-[#44495A]">▹</span><span>{a}</span></li>
+        ))}
+      </ul>
+
+      <h2 class={H}>Certificación</h2>
+      <p class="text-[11px] mb-3">AWS Certified Cloud Practitioner</p>
+
+      {topArticles.length > 0 && (
+        <>
+          <h2 class={H}>Lo más leído del blog</h2>
+          <ul class="flex flex-col gap-1 mb-3">
+            {topArticles.map((a) => (
+              <li class="text-[10.5px] flex gap-1.5"><span class="text-[#44495A]">▹</span><span>{a.data.name}</span></li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      {quote && (
+        <>
+          <h2 class={H}>Lo que dicen de mí</h2>
+          <blockquote class="text-[10.5px] italic text-[#444] leading-snug border-l-2 border-[#44495A] pl-2 mb-3">
+            “{quote}”
+            <footer class="not-italic text-[10px] text-[#666] mt-0.5">— {quoteAuthor}</footer>
+          </blockquote>
+        </>
+      )}
+
+      {award && (
+        <>
+          <h2 class={H}>Premios</h2>
+          <p class="text-[11px] mb-3">{award.title}{award.date ? ` (${award.date})` : ""}</p>
+        </>
+      )}
+
+      {vol && (
+        <>
+          <h2 class={H}>Voluntariado</h2>
+          <p class="text-[10.5px] font-semibold leading-tight">{vol.position}</p>
+          <p class="text-[10px] text-[#555] mb-0.5">{vol.organization}</p>
+        </>
+      )}
+    </div>
+  </div>
+</section>
