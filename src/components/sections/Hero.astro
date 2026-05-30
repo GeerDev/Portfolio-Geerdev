@@ -2,6 +2,7 @@
 import { basics } from "@cv"
 
 import Section from "../Section.astro";
+import Img from "@/components/Img.astro";
 
 import type { SocialIcon } from "@/interfaces/SocialIcon"
 
@@ -67,7 +68,7 @@ const SOCIAL_ICONS: SocialIcon = {
       </footer>
     </div>
     <figure class="relative flex shrink-0 overflow-hidden rounded-xl size-30">
-      <img src={image} alt={name} class="aspect-square w-full h-full"/>
+      <Img src={image} alt={name} class="aspect-square w-full h-full" width={240} loading="eager" />
     </figure>
   </div>
 </Section>

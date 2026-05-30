@@ -2,12 +2,17 @@
 import '../styles/global.css'
 
 import { basics } from '@cv'
+import meImg from '@/assets/images/me.webp'
+
 interface Props {
   title?: string
 }
 
 const { title = "Portfolio Germán Fernández Sierra" } = Astro.props
-const { image, summary, url } = basics
+const { summary, url } = basics
+
+// URL absoluta de la imagen optimizada para favicon y meta OG/Twitter.
+const ogImage = new URL(meImg.src, url).href
 ---
 
 <!doctype html>
@@ -15,8 +20,8 @@ const { image, summary, url } = basics
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href={image} />
-		<link rel="preload" as="image" href={image} />
+		<link rel="icon" type="image/webp" href={meImg.src} />
+		<link rel="preload" as="image" href={meImg.src} />
 		<title>{ title }</title>
 
 		<meta name="description" content={summary} />
@@ -25,14 +30,14 @@ const { image, summary, url } = basics
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={summary} />
-    <meta property="og:image" content="" />
+    <meta property="og:image" content={ogImage} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta property="twitter:domain" content={url.split("//")[1] ?? ''} />
     <meta property="twitter:url" content={url} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={summary} />
-    <meta name="twitter:image" content={image} />
+    <meta name="twitter:image" content={ogImage} />
 	</head>
 	<body>
 		<slot />

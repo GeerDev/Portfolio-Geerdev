@@ -1,6 +1,7 @@
 ---
 import { blog } from "@cv"
 import Section from "../Section.astro"
+import Img from "@/components/Img.astro"
 ---
 
 <Section title="Blog">
@@ -10,7 +11,7 @@ import Section from "../Section.astro"
       blog.filter(article => article.important).map(
         ({ url, description, highlights, name, isActive, image, category }, index) => {
           return (
-            <li 
+            <li
             class={`p-5 flex items-center justify-centerp-3 relative overflow-hidden group rounded-lg h-full gap-10 cursor-pointer animate-fade-in hover:shadow-lg transition-all duration-600 ${index % 2 !== 0 ? 'flex-row-reverse' : ''}`}
             >
               <div class="absolute left-0 bottom-0 h-1/2 w-px bg-[#ddd] group-hover:h-full transition-all duration-600"></div>
@@ -18,27 +19,35 @@ import Section from "../Section.astro"
               <div class="absolute right-0 top-0 h-1/2 w-px bg-[#ddd] group-hover:h-full transition-all duration-600"></div>
               <div class="absolute right-0 top-0 h-px w-1/6 bg-[#ddd] group-hover:w-full transition-all duration-600"></div>
               <figure class="relative flex shrink-0 overflow-hidden rounded-xl size-35">
-                <img src={image} alt={name} class="aspect-square w-full h-full"/>
+                <Img src={image} alt={name} class="aspect-square w-full h-full" width={280} />
               </figure>
-              <article>
-                <div class="flex flex-col gap-2">
-                  <header>
-                    <h2 class="bg-[#ddd] inline-flex rounded-lg text-sm px-5 py-1 mb-2 gap-3">{ category.map(item => {
-                      return <span class="font-semibold">{item} |</span>
-                    }) }</h2>
-                    <h3 class="flex justify-between items-center font-black">
-                      <div>
-                        <a href={url} target="_blank" title={`Ver el proyecto ${name}`}>
-                          {name}
-                        </a>
-                      </div>
+              <article class="flex-1">
+                <div class="flex flex-col gap-3">
+                  <header class="flex flex-col gap-2">
+                    <h3 class="text-xl font-black leading-tight">
+                      <a href={url} target="_blank" rel="noopener noreferrer" title={`Leer ${name}`} class="hover:underline">
+                        {name}
+                      </a>
                     </h3>
-                    <p>{description}</p>
+
+                    <div class="flex flex-wrap gap-1.5">
+                      {category.map((item) => (
+                        <span class="rounded-full bg-[#e8e8e8] px-2.5 py-0.5 text-xs font-semibold tracking-wide text-[#555]">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+
+                    <p class="text-sm text-[#666] leading-relaxed">{description}</p>
                   </header>
-                  <footer class="flex flex-wrap gap-2">
-                    {highlights.map((highlight) => {
-                      return <span class="font-semibold text-bg-[#44495A]">#{highlight}&nbsp</span>
-                    })}
+
+                  <footer class="flex flex-wrap gap-x-4 gap-y-1.5">
+                    {highlights.map((highlight) => (
+                      <span class="inline-flex items-center gap-1.5 text-xs text-[#555]">
+                        <span class="text-[#44495A]" aria-hidden="true">▹</span>
+                        {highlight}
+                      </span>
+                    ))}
                   </footer>
                 </div>
               </article>
@@ -48,11 +57,14 @@ import Section from "../Section.astro"
       )
     }
   </ul>
-  <div class="flex justify-end mt-5 hover:underline cursor-pointer">
-    <a href="/blog">...ver todos los artículos del blog</a>
+
+  <div class="flex justify-end mt-6">
+    <a
+      href="/blog"
+      class="group inline-flex items-center gap-2 rounded-full border border-[#ddd] px-4 py-2 text-sm font-medium transition duration-300 hover:bg-[#f5f5f5] hover:border-[#bbb]"
+    >
+      Ir al blog completo
+      <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+    </a>
   </div>
 </Section>
-
-
-
-

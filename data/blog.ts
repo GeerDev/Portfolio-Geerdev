@@ -4,40 +4,42 @@ export const blog = [
     "isActive": true,
     "category": ["IA", "Testing"],
     "important": true,
-    "description": "Historia interactiva con retos de programación para viajar a Marte",
+    "description": "Cómo combinar el Model Context Protocol (MCP) con Playwright para automatizar pruebas de navegador asistidas por IA.",
     "highlights": [
-      "Elige tu propia aventura",
-      "En desarrollo"
+      "Tests con IA",
+      "Automatización de navegador",
+      "MCP + Playwright"
     ],
-    "image": "/Angular.png",
-    "url": "https://mars.codes"
+    "image": "/MCP_Playwright.png",
+    "url": ""
   },
   {
     "name": "Índices en bases de datos",
     "isActive": true,
     "category": ["Bases de Datos", "Rendimiento"],
     "important": true,
-    "description": "Retos de programación en JavaScript para cada día de diciembre hasta Navidad",
+    "description": "Qué son los índices, cómo funcionan por dentro y cuándo usarlos para acelerar tus consultas y mejorar el rendimiento.",
     "highlights": [
-      "+1 millón de visitas",
-      "Multidioma",
-      "JavaScript & TypeScript"
+      "Consultas más rápidas",
+      "Cómo funciona un índice",
+      "Buenas prácticas SQL"
     ],
     "image": "/Team.png",
-    "url": "https://adventjs.dev"
+    "url": ""
   },
   {
     "name": "Microservicios",
     "isActive": true,
     "category": ["Infraestructura"],
     "important": true,
-    "description": "Juego interactivo de programación con retos y secretos",
+    "description": "Introducción a la arquitectura de microservicios: sus ventajas, sus retos y cuándo merece la pena frente a un monolito.",
     "highlights": [
-      "+2000 usuarios activos",
-      "Retos para cualquier lenguaje"
+      "Arquitectura escalable",
+      "Monolito vs microservicios",
+      "Despliegue independiente"
     ],
     "image": "/Ssh.png",
-    "url": "https://codember.dev"
+    "url": ""
   }
 ] as const;
 

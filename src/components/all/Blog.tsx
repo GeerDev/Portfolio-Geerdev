@@ -1,83 +1,111 @@
+import { useMemo, useState } from "react";
 
-import { blog } from "@cv"
-import { useState } from "react";
-
-export const Blog = () => {
-
-const [articles, setArticle] = useState(blog)
-
-const chooseCategory = ( category:string ) => {
-  if (category === 'all') {
-    setArticle(blog)
-  } else {
-    setArticle(blog.filter(article => article.category.includes(category)))
-  }
+interface Article {
+  name: string;
+  description: string;
+  url: string;
+  image: string;
+  category: readonly string[];
+  highlights: readonly string[];
 }
 
-return (
-  <section className="flex items-center justify-center flex-col gap-5 p-5">
-  <h2>Esta es la sección de blog donde se muestran todos los artículos que voy escribiendo, los puedes ver por categoría.</h2>
+interface Props {
+  articles: Article[];
+}
 
-  <li className="flex items-center justify-center text-sm gap-5 my-5 flex-wrap">
-    <button onClick={() => chooseCategory('all')} className="">Todos</button>
+export const Blog = ({ articles }: Props) => {
+  const [active, setActive] = useState<string>("all");
 
-    <button onClick={() => chooseCategory('web')} className="relative group px-2">
-      <span className="relative z-10 font-bold">Desarrollo web</span>
-      <span className="absolute left-0 bottom-0 h-[2px] w-0 bg-black transition-all duration-300 group-hover:w-full"></span>
-    </button>
+  // Categorías reales derivadas de los datos (así nunca se desincronizan).
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    articles.forEach((article) => article.category.forEach((c) => set.add(c)));
+    return ["all", ...set];
+  }, [articles]);
 
-    <button onClick={() => chooseCategory('security')} className="">Seguridad</button>
-    <button onClick={() => chooseCategory('auto')} className="">Automatización de procesos</button>
-    <button onClick={() => chooseCategory('infra')} className="">Infraestructura</button>
-    <button onClick={() => chooseCategory('testing')} className="">Testing</button>
-    <button onClick={() => chooseCategory('performance')} className="">Rendimiento</button>
-    <button onClick={() => chooseCategory('team')} className="">Trabajo en equipo</button>
-  </li>
-  
-  <ul className="-mx-3 flex flex-wrap gap-10 items-center justify-center w-full">
-    {
-      articles.map(
-        ({ url, description, highlights, name, isActive, image }, index) => {
+  const visible =
+    active === "all"
+      ? articles
+      : articles.filter((article) => article.category.includes(active));
+
+  return (
+    <section className="flex flex-col items-center gap-6 p-5">
+      <p className="text-[#666] text-center max-w-2xl">
+        Aquí comparto los artículos que voy escribiendo, puedes filtrarlos por categoría.
+      </p>
+
+      <ul className="flex flex-wrap items-center justify-center gap-2 text-sm">
+        {categories.map((category) => {
+          const isActive = active === category;
+          const label = category === "all" ? "Todos" : category;
           return (
-            <li
-            key={`${index}-${name}`}
-            >
-              <a href={`/article/${name}`} className={`p-5 flex items-center justify-centerp-3 relative overflow-hidden group rounded-lg h-full gap-10 cursor-pointer animate-fade-in hover:shadow-lg transition-all duration-600 w-150 bg-[#f5f5f5] hover:bg-[#fff] hover:scale-105`}>
-                <div className="absolute left-0 bottom-0 h-1/2 w-px bg-[#aaa] group-hover:h-full transition-all duration-600"></div>
-                <div className="absolute left-0 bottom-0 h-px w-1/6 bg-[#aaa] group-hover:w-full transition-all duration-600"></div>
-                <div className="absolute right-0 top-0 h-1/2 w-px bg-[#aaa] group-hover:h-full transition-all duration-600"></div>
-                <div className="absolute right-0 top-0 h-px w-1/6 bg-[#aaa] group-hover:w-full transition-all duration-600"></div>
-                <figure className="relative flex shrink-0 overflow-hidden rounded-xl size-35">
-                  <img src={image} alt={name} className="aspect-square w-full h-full"/>
-                </figure>
-                <article>
-                  <div className="flex flex-col gap-2">
-                    <header>
-                      <h3 className="flex justify-between items-center">
-                        <div>
-                          <a href={url} target="_blank" title={`Ver el proyecto ${name}`}>
-                            {name}
-                          </a>
-                          {isActive && <span>•</span>}
-                        </div>
-                      </h3>
-                      <p>{description}</p>
-                    </header>
-                    <footer className="flex flex-col">
-                      {highlights.map((highlight, index) => {
-                        return <span key={`${index}`}>- { highlight }</span>
-                      })}
-                    </footer>
-                    {/* <Skills /> */}
-                  </div>
-                </article>
-              </a>
+            <li key={category}>
+              <button
+                onClick={() => setActive(category)}
+                className={`rounded-full border px-3 py-1 transition duration-300 ${
+                  isActive
+                    ? "bg-[#44495A] text-white border-[#44495A]"
+                    : "border-[#ddd] text-[#444] hover:bg-[#f5f5f5]"
+                }`}
+              >
+                {label}
+              </button>
             </li>
-          )
-        }
-      )
-    }
-  </ul>
-</section>
-);
+          );
+        })}
+      </ul>
+
+      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-3xl">
+        {visible.map(({ url, description, highlights, name, image, category }, index) => (
+          <li
+            key={`${index}-${name}`}
+            className="group flex flex-col rounded-xl border border-[#eee] overflow-hidden shadow-sm transition duration-300 hover:shadow-xl hover:-translate-y-1"
+          >
+            <a
+              href={url || "#"}
+              target={url ? "_blank" : undefined}
+              rel="noopener noreferrer"
+              title={`Leer ${name}`}
+              className="flex flex-col h-full"
+            >
+              <figure className="overflow-hidden">
+                <img
+                  src={image}
+                  alt={name}
+                  loading="lazy"
+                  className="w-full aspect-video object-cover transition duration-500 group-hover:scale-105"
+                />
+              </figure>
+
+              <article className="flex flex-col gap-2 flex-1 p-4">
+                <h3 className="font-black text-lg group-hover:underline">{name}</h3>
+
+                <div className="flex flex-wrap gap-1.5">
+                  {category.map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full bg-[#e8e8e8] px-2.5 py-0.5 text-xs font-semibold text-[#555]"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+
+                <p className="text-sm text-[#666] leading-relaxed">{description}</p>
+
+                <footer className="mt-auto pt-2 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-[#555]">
+                  {highlights.map((highlight, i) => (
+                    <span key={i} className="inline-flex items-center gap-1.5">
+                      <span className="text-[#44495A]" aria-hidden="true">▹</span>
+                      {highlight}
+                    </span>
+                  ))}
+                </footer>
+              </article>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 };

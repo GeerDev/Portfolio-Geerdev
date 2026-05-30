@@ -1,7 +1,11 @@
 ---
 import Section from "../Section.astro";
+import Img from "@/components/Img.astro";
 
-import { reviews } from "@cv"
+import { reviews, basics } from "@cv"
+
+const linkedInUrl = basics.profiles.find(({ network }) => network === "LinkedIn")?.url
+const recommendationsUrl = linkedInUrl ? `${linkedInUrl.replace(/\/$/, "")}/details/recommendations/` : null
 ---
 
 <Section title="Recomendaciones">
@@ -12,7 +16,7 @@ import { reviews } from "@cv"
           <li class="p-2">
             <article class="flex flex-col gap-4">
               <header class="flex items-center gap-5">
-                <img src={ image } alt={ name } class="rounded-full size-16 object-cover" loading="lazy" />
+                <Img src={ image } alt={ name } class="rounded-full size-16 object-cover" width={128} />
                 <div>
                   <h3 class="font-bold">{ name }</h3>
                   <h2>{ position }</h2>
@@ -29,4 +33,18 @@ import { reviews } from "@cv"
       })
     }
   </ul>
+
+  {recommendationsUrl && (
+    <div class="flex justify-end mt-6">
+      <a
+        href={recommendationsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group inline-flex items-center gap-2 rounded-full border border-[#ddd] px-4 py-2 text-sm font-medium transition duration-300 hover:bg-[#f5f5f5] hover:border-[#bbb]"
+      >
+        Ver todas mis recomendaciones
+        <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+      </a>
+    </div>
+  )}
 </Section>

@@ -8,64 +8,45 @@ export const projects = [
       "Highlight importante 1",
       "Ejemplo de highlight 2"
     ],
+    "skills": ["React", "TypeScript", "Tailwind"],
     "url": "url"
   },
   {
-    "name": "AdventJS",
+    "name": "Proyecto",
     "image": "/Amalila.webp",
     "isActive": true,
-    "description": "Retos de programación en JavaScript para cada día de diciembre hasta Navidad",
+    "description": "Esto sería una breve descripción del proyecto",
     "highlights": [
-      "+1 millón de visitas",
-      "Multidioma",
-      "JavaScript & TypeScript"
+      "Highlight importante 1",
+      "Ejemplo de highlight 2"
     ],
-    "url": "https://adventjs.dev"
+    "skills": ["Javascript", "TypeScript", "Node"],
+    "url": "url"
   },
   {
-    "name": "Codember",
+    "name": "Proyecto",
     "image": "/Kiaba.webp",
     "isActive": true,
-    "description": "Juego interactivo de programación con retos y secretos",
+    "description": "Esto sería una breve descripción del proyecto",
     "highlights": [
-      "+2000 usuarios activos",
-      "Retos para cualquier lenguaje"
+      "Highlight importante 1",
+      "Ejemplo de highlight 2"
     ],
-    "url": "https://codember.dev"
+    "skills": ["Javascript", "Node"],
+    "url": "url"
   },
   {
-    "name": "codi.link",
+    "name": "Proyecto",
     "image": "/Live.webp",
     "isActive": true,
-    "description": "Playground de código HTML, CSS y JavaScript para compartir",
+    "description": "Esto sería una breve descripción del proyecto",
     "highlights": [
-      "100k visitas al mes",
-      "Desarrollado por la comunidad"
+      "Highlight importante 1",
+      "Ejemplo de highlight 2"
     ],
-    "url": "https://codi.link",
-    "github": "https://github.com/midudev/codi.link"
-  },
-  {
-    "name": "Pruebas Técnicas",
-    "image": "/Angular.webp",
-    "isActive": true,
-    "description": "Lista de pruebas técnicas de empresas para practicar programación",
-    "highlights": [
-      "100% gratuito",
-      "+500 soluciones de la comunidad"
-    ],
-    "url": "https://pruebastecnicas.com",
-    "github": "https://github.com/midudev/pruebas-tecnicas"
-  },
-  {
-    "name": "miduConf",
-    "image": "/Angular.webp",
-    "description": "Conferencia de programación en streaming para la comunidad hispanohablante con charlas top",
-    "highlights": [
-      "+15k tickets repartidos",
-      "+50k espectadores en directo"
-    ],
-    "url": "https://miduconf.com"
+    "skills": ["Html", "Css", "Javascript"],
+    "url": "url",
+    "github": "url_github"
   }
 ] as const;
 

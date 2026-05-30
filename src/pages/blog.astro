@@ -1,9 +1,18 @@
 ---
-import { Blog as BlogPage } from "@/components/all/Blog.tsx";
 import Layout from "@/layouts/Layout.astro";
+import { Blog as BlogPage } from "@/components/all/Blog.tsx";
+import { resolveImageSrc } from "@/lib/images";
 
-import { basics } from "@cv"
+import { basics, blog } from "@cv"
 const { name, label } = basics
+
+// Pre-resolvemos las imágenes aquí (en el .astro) y se las pasamos ya listas al
+// componente React. Patrón recomendado por la documentación de Astro: <Image/> no
+// funciona dentro de componentes de framework, así que se pre-optimiza en el padre.
+const articles = blog.map((article) => ({
+  ...article,
+  image: resolveImageSrc(article.image),
+}))
 ---
 <Layout title={`Portafolio de ${name} - ${label}`}>
   <section class="flex justify-between items-center px-10 pt-6 my-5">
@@ -13,6 +22,6 @@ const { name, label } = basics
     <h1 class="text-3xl font-bold text-center flex-1">Todos mis artículos</h1>
   </section>
   <main>
-    <BlogPage client:visible />
+    <BlogPage articles={articles} client:visible />
   </main>
 </Layout>

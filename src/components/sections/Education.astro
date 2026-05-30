@@ -1,5 +1,6 @@
 ---
 import Section from "../Section.astro";
+import Img from "@/components/Img.astro";
 
 import { education } from "@cv"
 ---
@@ -24,10 +25,11 @@ import { education } from "@cv"
               </div>
 
               <figure class="shrink-0 flex items-center justify-center size-14 rounded-lg border border-[#eee] bg-white p-1.5">
-                <img
+                <Img
                   src={image}
                   alt={institution}
                   class="max-w-full max-h-full object-contain"
+                  width={112}
                 />
               </figure>
             </article>

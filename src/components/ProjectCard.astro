@@ -1,0 +1,43 @@
+---
+import Img from "./Img.astro";
+import Skills from "./Skills.astro";
+
+interface Props {
+  project: {
+    name: string;
+    image: string;
+    description: string;
+    highlights: readonly string[];
+    skills?: readonly string[];
+    url: string;
+  };
+}
+
+const { project } = Astro.props;
+const { url, description, highlights, name, image, skills } = project;
+---
+
+<li class="group flex flex-col rounded-xl border border-[#eee] overflow-hidden shadow-sm transition duration-300 hover:shadow-xl hover:-translate-y-1">
+  <a href={url} target="_blank" rel="noopener noreferrer" title={`Ver el proyecto ${name}`} class="flex flex-col h-full">
+    <figure class="overflow-hidden">
+      <Img src={image} alt={name} class="w-full aspect-video object-cover transition duration-500 group-hover:scale-105" width={480} />
+    </figure>
+
+    <article class="flex flex-col gap-2 flex-1 p-4">
+      <header class="flex flex-col gap-1">
+        <h3 class="font-black text-lg group-hover:underline">{name}</h3>
+        <p class="text-sm text-[#666] leading-relaxed">{description}</p>
+      </header>
+
+      <main class="flex flex-col gap-1 text-sm text-[#555]">
+        {highlights.map((highlight) => (
+          <span>• {highlight}</span>
+        ))}
+      </main>
+
+      <footer class="mt-auto pt-3 text-white">
+        <Skills color="bg-[#44495A]" items={skills} />
+      </footer>
+    </article>
+  </a>
+</li>
