@@ -1,10 +1,19 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/Section.astro";
-import ProjectCard from "@/components/ProjectCard.astro";
+import { Projects as ProjectsPage } from "@/components/all/Projects.tsx";
+import { resolveImageSrc } from "@/lib/images";
 
 import { basics, projects } from "@cv"
 const { name, label } = basics
+
+// Pre-resolvemos las imágenes aquí (en el .astro) y se las pasamos ya listas al
+// componente React. Mismo patrón que blog.astro (recomendado por la doc de Astro:
+// <Image/> no funciona dentro de componentes de framework).
+const items = projects.map((project) => ({
+  ...project,
+  image: resolveImageSrc(project.image),
+}))
 ---
 <Layout title={`Portafolio de ${name} - ${label}`}>
   <main class="p-10">
@@ -13,12 +22,8 @@ const { name, label } = basics
         ← Volver al inicio
       </a>
     </section>
-    <Section title="Todos mis proyectos">
-      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-5 items-stretch">
-        {
-          projects.map((project) => <ProjectCard project={project} />)
-        }
-      </ul>
+    <Section title="Todos mis proyectos" center>
+      <ProjectsPage projects={items} client:visible />
     </Section>
   </main>
 </Layout>
