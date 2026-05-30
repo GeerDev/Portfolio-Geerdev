@@ -3,16 +3,19 @@ import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/Section.astro";
 import { Blog as BlogPage } from "@/components/all/Blog.tsx";
 import { resolveImageSrc } from "@/lib/images";
+import { getCollection } from "astro:content";
 
-import { basics, blog } from "@cv"
+import { basics } from "@cv"
 const { name, label } = basics
 
-// Pre-resolvemos las imágenes aquí (en el .astro) y se las pasamos ya listas al
-// componente React. Patrón recomendado por la documentación de Astro: <Image/> no
-// funciona dentro de componentes de framework, así que se pre-optimiza en el padre.
-const articles = blog.map((article) => ({
-  ...article,
-  image: resolveImageSrc(article.image),
+// Fuente única: colección de contenido. Pre-resolvemos la imagen aquí (string)
+// porque <Image/> no funciona dentro del componente React.
+const entries = (await getCollection("blog"))
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const articles = entries.map((e) => ({
+  slug: e.id,
+  ...e.data,
+  image: resolveImageSrc(e.data.image),
 }))
 ---
 <Layout title={`Portafolio de ${name} - ${label}`}>

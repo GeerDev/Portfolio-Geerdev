@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 
 interface Project {
+  slug: string;
   name: string;
   description: string;
-  url: string;
   image: string;
   highlights: readonly string[];
   skills?: readonly string[];
@@ -59,15 +59,13 @@ export const Projects = ({ projects }: Props) => {
       </ul>
 
       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-3xl items-stretch">
-        {visible.map(({ url, description, highlights, name, image, skills }, index) => (
+        {visible.map(({ slug, description, highlights, name, image, skills }, index) => (
           <li
             key={`${index}-${name}`}
             className="group flex flex-col rounded-xl border border-[#eee] overflow-hidden shadow-sm transition duration-300 hover:shadow-xl hover:-translate-y-1"
           >
             <a
-              href={url || "#"}
-              target={url ? "_blank" : undefined}
-              rel="noopener noreferrer"
+              href={`/project/${slug}`}
               title={`Ver el proyecto ${name}`}
               className="flex flex-col h-full"
             >

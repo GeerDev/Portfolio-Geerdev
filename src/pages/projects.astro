@@ -3,16 +3,19 @@ import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/Section.astro";
 import { Projects as ProjectsPage } from "@/components/all/Projects.tsx";
 import { resolveImageSrc } from "@/lib/images";
+import { getCollection } from "astro:content";
 
-import { basics, projects } from "@cv"
+import { basics } from "@cv"
 const { name, label } = basics
 
-// Pre-resolvemos las imágenes aquí (en el .astro) y se las pasamos ya listas al
-// componente React. Mismo patrón que blog.astro (recomendado por la doc de Astro:
-// <Image/> no funciona dentro de componentes de framework).
-const items = projects.map((project) => ({
-  ...project,
-  image: resolveImageSrc(project.image),
+// Fuente única: colección de contenido. Pre-resolvemos la imagen aquí (string)
+// porque <Image/> no funciona dentro del componente React.
+const entries = (await getCollection("projects"))
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const items = entries.map((e) => ({
+  slug: e.id,
+  ...e.data,
+  image: resolveImageSrc(e.data.image),
 }))
 ---
 <Layout title={`Portafolio de ${name} - ${label}`}>

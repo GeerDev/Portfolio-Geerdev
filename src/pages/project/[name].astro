@@ -1,12 +1,90 @@
 ---
+import { getCollection, render } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Section.astro";
+import Img from "@/components/Img.astro";
+import { basics } from "@cv";
+
 export async function getStaticPaths() {
-  // Aquí defines qué valores puede tomar [name]
-  return [
-    { params: { name: 'mi-primer-articulo' } },
-    { params: { name: 'guia-de-astro' } },
-  ];
+  const entries = await getCollection("projects");
+  return entries.map((entry) => ({ params: { name: entry.id }, props: { entry } }));
 }
 
-const { name } = Astro.params;
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { name: projectName, description, image, skills, url, github } = entry.data;
+const { name } = basics;
 ---
-<h1>Estás leyendo: {name}</h1>
+
+<Layout title={`${projectName} - ${name}`}>
+  <main class="p-10">
+    <section class="max-w-3xl mx-auto mb-5">
+      <a id="back-link" href="/projects" class="text-sm text-blue-600 hover:underline transition">
+        ← Volver a proyectos
+      </a>
+    </section>
+
+    <script is:inline>
+      // Enlace "volver" según el origen: si llegas desde la home, vuelve al
+      // portfolio; en otro caso, vuelve al listado de proyectos (por defecto).
+      const back = document.getElementById("back-link");
+      if (back && document.referrer) {
+        try {
+          const from = new URL(document.referrer);
+          if (from.origin === location.origin && from.pathname === "/") {
+            back.setAttribute("href", "/");
+            back.textContent = "← Volver al portfolio";
+          }
+        } catch {}
+      }
+    </script>
+
+    <Section title={projectName} center>
+      {image && (
+        <figure class="rounded-xl overflow-hidden mb-6">
+          <Img src={image} alt={projectName} class="w-full aspect-video object-cover" width={768} />
+        </figure>
+      )}
+
+      <p class="text-[#666] text-lg mb-4">{description}</p>
+
+      {skills.length > 0 && (
+        <ul class="flex flex-wrap gap-2 mb-5">
+          {skills.map((s) => (
+            <li class="rounded-lg bg-[#44495A] text-white text-sm px-2 py-0.5">{s}</li>
+          ))}
+        </ul>
+      )}
+
+      {(url || github) && (
+        <div class="flex flex-wrap gap-3 mb-8">
+          {url && url !== "url" && (
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group inline-flex items-center gap-2 rounded-full border border-[#ddd] px-4 py-2 text-sm font-medium transition duration-300 hover:bg-[#f5f5f5] hover:border-[#bbb]"
+            >
+              Ver en vivo
+              <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </a>
+          )}
+          {github && (
+            <a
+              href={github}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 rounded-full border border-[#ddd] px-4 py-2 text-sm font-medium transition duration-300 hover:bg-[#f5f5f5] hover:border-[#bbb]"
+            >
+              GitHub
+            </a>
+          )}
+        </div>
+      )}
+
+      <article class="markdown-body">
+        <Content />
+      </article>
+    </Section>
+  </main>
+</Layout>

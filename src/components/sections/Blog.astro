@@ -1,56 +1,65 @@
 ---
-import { blog } from "@cv"
 import Section from "../Section.astro"
 import Img from "@/components/Img.astro"
+import { getCollection } from "astro:content"
+
+const entries = (await getCollection("blog"))
+  .filter((e) => e.data.important)
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const articles = entries.map((e) => ({ slug: e.id, ...e.data }));
 ---
 
 <Section title="Blog">
   <h2>Esta es la sección de blog donde se muestran todos los artículos que voy escribiendo.</h2>
   <ul class="-mx-3 grid grid-cols-1 gap-5 py-5">
     {
-      blog.filter(article => article.important).map(
-        ({ url, description, highlights, name, isActive, image, category }, index) => {
+      articles.map(
+        ({ slug, description, highlights, name, image, category }, index) => {
           return (
             <li
-            class={`p-5 flex items-center justify-centerp-3 relative overflow-hidden group rounded-lg h-full gap-10 cursor-pointer animate-fade-in hover:shadow-lg transition-all duration-600 ${index % 2 !== 0 ? 'flex-row-reverse' : ''}`}
+            class={`relative overflow-hidden group rounded-lg h-full animate-fade-in hover:shadow-lg transition-all duration-600`}
             >
               <div class="absolute left-0 bottom-0 h-1/2 w-px bg-[#ddd] group-hover:h-full transition-all duration-600"></div>
               <div class="absolute left-0 bottom-0 h-px w-1/6 bg-[#ddd] group-hover:w-full transition-all duration-600"></div>
               <div class="absolute right-0 top-0 h-1/2 w-px bg-[#ddd] group-hover:h-full transition-all duration-600"></div>
               <div class="absolute right-0 top-0 h-px w-1/6 bg-[#ddd] group-hover:w-full transition-all duration-600"></div>
-              <figure class="relative flex shrink-0 overflow-hidden rounded-xl size-35">
-                <Img src={image} alt={name} class="aspect-square w-full h-full" width={280} />
-              </figure>
-              <article class="flex-1">
-                <div class="flex flex-col gap-3">
-                  <header class="flex flex-col gap-2">
-                    <h3 class="text-xl font-black leading-tight">
-                      <a href={url} target="_blank" rel="noopener noreferrer" title={`Leer ${name}`} class="hover:underline">
+              <a
+                href={`/article/${slug}`}
+                title={`Leer ${name}`}
+                class={`p-5 flex items-center justify-center gap-10 cursor-pointer ${index % 2 !== 0 ? 'flex-row-reverse' : ''}`}
+              >
+                <figure class="relative flex shrink-0 overflow-hidden rounded-xl size-35">
+                  <Img src={image} alt={name} class="aspect-square w-full h-full" width={280} />
+                </figure>
+                <article class="flex-1">
+                  <div class="flex flex-col gap-3">
+                    <header class="flex flex-col gap-2">
+                      <h3 class="text-xl font-black leading-tight group-hover:underline">
                         {name}
-                      </a>
-                    </h3>
+                      </h3>
 
-                    <div class="flex flex-wrap gap-1.5">
-                      {category.map((item) => (
-                        <span class="rounded-full bg-[#e8e8e8] px-2.5 py-0.5 text-xs font-semibold tracking-wide text-[#555]">
-                          {item}
+                      <div class="flex flex-wrap gap-1.5">
+                        {category.map((item) => (
+                          <span class="rounded-full bg-[#e8e8e8] px-2.5 py-0.5 text-xs font-semibold tracking-wide text-[#555]">
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+
+                      <p class="text-sm text-[#666] leading-relaxed">{description}</p>
+                    </header>
+
+                    <footer class="flex flex-wrap gap-x-4 gap-y-1.5">
+                      {highlights.map((highlight) => (
+                        <span class="inline-flex items-center gap-1.5 text-xs text-[#555]">
+                          <span class="text-[#44495A]" aria-hidden="true">▹</span>
+                          {highlight}
                         </span>
                       ))}
-                    </div>
-
-                    <p class="text-sm text-[#666] leading-relaxed">{description}</p>
-                  </header>
-
-                  <footer class="flex flex-wrap gap-x-4 gap-y-1.5">
-                    {highlights.map((highlight) => (
-                      <span class="inline-flex items-center gap-1.5 text-xs text-[#555]">
-                        <span class="text-[#44495A]" aria-hidden="true">▹</span>
-                        {highlight}
-                      </span>
-                    ))}
-                  </footer>
-                </div>
-              </article>
+                    </footer>
+                  </div>
+                </article>
+              </a>
             </li>
           )
         }

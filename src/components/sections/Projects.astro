@@ -1,8 +1,11 @@
 ---
 import Section from "../Section.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
+import { getCollection } from "astro:content";
 
-import { projects } from "@cv"
+const entries = (await getCollection("projects"))
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const projects = entries.map((e) => ({ slug: e.id, ...e.data }));
 ---
 
 <Section title="Mis proyectos">

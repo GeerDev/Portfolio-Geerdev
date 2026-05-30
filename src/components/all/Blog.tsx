@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 
 interface Article {
+  slug: string;
   name: string;
   description: string;
-  url: string;
   image: string;
   category: readonly string[];
   highlights: readonly string[];
@@ -56,15 +56,13 @@ export const Blog = ({ articles }: Props) => {
       </ul>
 
       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-3xl">
-        {visible.map(({ url, description, highlights, name, image, category }, index) => (
+        {visible.map(({ slug, description, highlights, name, image, category }, index) => (
           <li
             key={`${index}-${name}`}
             className="group flex flex-col rounded-xl border border-[#eee] overflow-hidden shadow-sm transition duration-300 hover:shadow-xl hover:-translate-y-1"
           >
             <a
-              href={url || "#"}
-              target={url ? "_blank" : undefined}
-              rel="noopener noreferrer"
+              href={`/article/${slug}`}
               title={`Leer ${name}`}
               className="flex flex-col h-full"
             >
