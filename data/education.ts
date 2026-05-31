@@ -22,7 +22,7 @@ export const education = [
     "url": "https://www.upv.es",
     "area": "Ingeniería Industrial Superior · Automática Industrial",
     "studyType": "Ingeniería Superior",
-    "image": "/upv-seal.svg",
+    "image": "/upv.png",
     "startDate": "2013-01-01",
     "endDate": "2017-01-01"
   },
@@ -31,7 +31,7 @@ export const education = [
     "url": "https://www.upv.es",
     "area": "Ingeniería Técnica Industrial · Electrónica",
     "studyType": "Ingeniería Técnica",
-    "image": "/upv-seal.svg",
+    "image": "/upv.png",
     "startDate": "2008-01-01",
     "endDate": "2012-01-01"
   }
