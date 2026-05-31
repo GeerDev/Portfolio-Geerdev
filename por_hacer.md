@@ -46,3 +46,4 @@ En cuanto tengas los años del banco y métricas (usuarios, rendimiento, desplie
 - Web de la protectora
 - Paginas detalle
 - Modo impresion
+- A destacar, creación de entornos de trabajo con Ia y utilización de herramientas productivas
