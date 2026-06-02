@@ -47,3 +47,7 @@ En cuanto tengas los años del banco y métricas (usuarios, rendimiento, desplie
 - Paginas detalle
 - Modo impresion
 - A destacar, creación de entornos de trabajo con Ia y utilización de herramientas productivas
+- Arreglar public
+- Info a mostrar
+- Imágenes
+- sobre mi, curioso, autodidacta
