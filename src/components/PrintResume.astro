@@ -2,18 +2,18 @@
 // CV compacto de UNA PÁGINA, pensado solo para impresión (Ctrl+P).
 // En pantalla está oculto; al imprimir se muestra (ver index.astro y global.css).
 // Es data-driven: usa los datos del CV (@cv) + proyectos y blog de las colecciones.
-import { basics, work, education, awards, reviews, volunteer, aptitudes } from "@cv";
+import { basics, work, education, awards, reviews, volunteer, aptitudes, technologies } from "@cv";
 import { getCollection } from "astro:content";
 
-const { name, label, email, url, location, profiles, summary } = basics;
+const { name, label, email, url, location, profiles, summaryResume } = basics;
 const { city, region } = location;
 
 const linkedin = profiles.find((p) => p.network === "LinkedIn")?.url;
 const github = profiles.find((p) => p.network === "GitHub")?.url;
 const portfolio = url.replace("https://", "").replace(/\/$/, "");
 
-// Perfil corto: primer párrafo del summary.
-const perfil = summary.split("\n\n")[0];
+// Perfil corto del CV: resumen condensado del "Sobre mí" web (ver basics.ts).
+const perfil = summaryResume;
 
 const year = (d: string | null) =>
   d != null ? new Date(d).getFullYear() : "Actual";
@@ -21,15 +21,15 @@ const year = (d: string | null) =>
 // Proyectos y artículos destacados (fuente única: colecciones).
 const projectEntries = (await getCollection("projects"))
   .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
-const topProjects = projectEntries.slice(0, 3);
+const topProjects = projectEntries.slice(0, 2);
 
 const articleEntries = (await getCollection("blog"))
   .filter((a) => a.data.important)
   .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 const topArticles = articleEntries.slice(0, 4);
 
-// Tecnologías únicas a partir de los proyectos (no se inventan).
-const skills = [...new Set(projectEntries.flatMap((p) => p.data.skills))];
+// Tecnologías del CV: fuente dedicada (data/technologies.ts), agrupadas por área.
+const techGroups = Object.entries(technologies);
 
 const award = awards[0];
 const vol = volunteer[0];
@@ -123,11 +123,18 @@ const H = "text-[13px] font-black uppercase tracking-wide text-[#44495A] border-
     <!-- Columna lateral -->
     <div class="col-span-1 flex flex-col">
       <h2 class={H}>Tecnologías</h2>
-      <ul class="flex flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-[#333] mb-3">
-        {skills.map((s, i) => (
-          <li class="whitespace-nowrap">{s}{i < skills.length - 1 && <span class="text-[#aaa] ml-2">·</span>}</li>
+      <div class="flex flex-col gap-1.5 mb-3">
+        {techGroups.map(([group, items]) => (
+          <div>
+            <p class="text-[9.5px] font-bold uppercase tracking-wide text-[#44495A]">{group}</p>
+            <ul class="flex flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-[#333]">
+              {items.map((s, i) => (
+                <li class="whitespace-nowrap">{s}{i < items.length - 1 && <span class="text-[#aaa] ml-2">·</span>}</li>
+              ))}
+            </ul>
+          </div>
         ))}
-      </ul>
+      </div>
 
       <h2 class={H}>Aptitudes</h2>
       <ul class="flex flex-col gap-0.5 mb-3">
@@ -139,7 +146,7 @@ const H = "text-[13px] font-black uppercase tracking-wide text-[#44495A] border-
       <h2 class={H}>Certificación</h2>
       <p class="text-[11px] mb-3">AWS Certified Cloud Practitioner</p>
 
-      {topArticles.length > 0 && (
+      <!-- {topArticles.length > 0 && (
         <>
           <h2 class={H}>Lo más leído del blog</h2>
           <ul class="flex flex-col gap-1 mb-3">
@@ -148,7 +155,7 @@ const H = "text-[13px] font-black uppercase tracking-wide text-[#44495A] border-
             ))}
           </ul>
         </>
-      )}
+      )} -->
 
       {quote && (
         <>
@@ -167,13 +174,13 @@ const H = "text-[13px] font-black uppercase tracking-wide text-[#44495A] border-
         </>
       )}
 
-      {vol && (
+      <!-- {vol && (
         <>
           <h2 class={H}>Voluntariado</h2>
           <p class="text-[10.5px] font-semibold leading-tight">{vol.position}</p>
           <p class="text-[10px] text-[#555] mb-0.5">{vol.organization}</p>
         </>
-      )}
+      )} -->
     </div>
   </div>
 </section>
