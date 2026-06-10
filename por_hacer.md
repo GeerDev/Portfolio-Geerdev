@@ -54,3 +54,14 @@ En cuanto tengas los años del banco y métricas (usuarios, rendimiento, desplie
 - sobre mi, curioso, autodidacta
 - Arreglar todos los archivos IA.md
 - Proyectos/Blog buenos
+
+Factores:
+- revisar el lang
+- opengraph
+- reducir el numero de palabras, las paginas web no son libros, utilizar negrita para partes importantes
+- seo, referenciar a otros sitios web o que se te referencie a ti
+- web performance
+- accesibilidad y semántica
+- errores de ortografía
+- seguridad web
+- responsive
